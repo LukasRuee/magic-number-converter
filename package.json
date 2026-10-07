@@ -1,0 +1,69 @@
+{
+  "name": "magic-number-converter",
+  "displayName": "Magic Number Converter",
+  "description": "Detects magic numbers in C/C++, lets you step through them and either keep them or convert them into named constants (in the matching header, or an anonymous namespace).",
+  "version": "0.1.0",
+  "publisher": "local",
+  "license": "MIT",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Linters", "Other"],
+  "activationEvents": ["onLanguage:c", "onLanguage:cpp"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "magicNumbers.review", "title": "Magic Numbers: Review and Convert" },
+      { "command": "magicNumbers.clearIgnored", "title": "Magic Numbers: Clear \"Keep\" Decisions" },
+      { "command": "magicNumbers.convertAt", "title": "Magic Numbers: Convert at Position" },
+      { "command": "magicNumbers.keepAt", "title": "Magic Numbers: Keep at Position" }
+    ],
+    "keybindings": [
+      {
+        "command": "magicNumbers.review",
+        "key": "ctrl+alt+m",
+        "mac": "cmd+alt+m",
+        "when": "editorTextFocus && (editorLangId == cpp || editorLangId == c)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        { "command": "magicNumbers.convertAt", "when": "false" },
+        { "command": "magicNumbers.keepAt", "when": "false" }
+      ],
+      "editor/context": [
+        { "command": "magicNumbers.review", "when": "editorLangId == cpp || editorLangId == c", "group": "1_modification" }
+      ]
+    },
+    "configuration": {
+      "title": "Magic Number Converter",
+      "properties": {
+        "magicNumbers.allowedNumbers": {
+          "type": "array",
+          "items": { "type": "number" },
+          "default": [0, 1, 2],
+          "description": "Numbers that are never reported (compared by absolute value, so 1 also allows -1)."
+        },
+        "magicNumbers.namingStyle": {
+          "type": "string",
+          "enum": ["UPPER_SNAKE", "kPascalCase"],
+          "default": "UPPER_SNAKE",
+          "description": "Style used for suggested constant names."
+        },
+        "magicNumbers.showDiagnostics": {
+          "type": "boolean",
+          "default": true,
+          "description": "Underline magic numbers (information level) and offer a quick fix."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/vscode": "1.85.0",
+    "typescript": "^5.4.0"
+  }
+}
