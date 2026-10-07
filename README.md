@@ -278,14 +278,7 @@ package.json       # manifest: commands, keybindings, settings
 
 ## Contributing
 
-Issues and pull requests are welcome. Good first topics:
-
-- namespace- and class-aware placement in headers
-- configurable allowed-number ranges or per-context rules
-- unit tests for the scanner and placement logic
-- additional naming strategies
-
-Please keep changes small and include an example input/output in the PR description.
+Issues and pull requests are welcome.
 
 ## License
 
